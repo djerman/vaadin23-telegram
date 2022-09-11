@@ -27,6 +27,7 @@ ready to be deployed. The file can be found in the `target` folder after the bui
 
 Once the JAR file is built, you can run it using
 `java -jar target/vaadin23-telegram-1.0-SNAPSHOT.jar`
+or you can change settings for deploying WAR file
 
 ## Project structure
 
