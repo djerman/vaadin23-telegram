@@ -12,7 +12,7 @@ type `mvnw` (Windows), or `./mvnw` (Mac & Linux), then open
 http://localhost:8080 in your browser.
 
 Telegram widget supports only run on port 80!!!!
->ou also need a domian name and additional settings in Telegram bot!!!
+You also need a domian name and additional settings in Telegram bot!!!
 
 You can also import the project to your IDE of choice as you would with any
 Maven project. Read more on [how to import Vaadin projects to different 
@@ -38,7 +38,7 @@ Once the JAR file is built, you can run it using
 - `themes` folder in `frontend/` contains the custom CSS styles.
 
 ## Useful links
-
+- Telegram instrustions for Telegram Widget Login https://core.telegram.org/widgets/login
 - Read the documentation at [vaadin.com/docs](https://vaadin.com/docs).
 - Follow the tutorials at [vaadin.com/tutorials](https://vaadin.com/tutorials).
 - Watch training videos and get certified at [vaadin.com/learn/training](https://vaadin.com/learn/training).
