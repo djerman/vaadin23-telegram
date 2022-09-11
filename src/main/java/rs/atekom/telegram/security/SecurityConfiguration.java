@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import rs.atekom.telegram.views.login.LoginView;
 
+@SuppressWarnings("deprecation")
 @EnableWebSecurity
 @Configuration
 public class SecurityConfiguration extends VaadinWebSecurityConfigurerAdapter {
@@ -23,7 +24,6 @@ public class SecurityConfiguration extends VaadinWebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-
         super.configure(http);
         setLoginView(http, LoginView.class, LOGOUT_URL);
     }

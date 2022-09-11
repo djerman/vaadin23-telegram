@@ -3,21 +3,17 @@ package rs.atekom.telegram.views;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.avatar.Avatar;
-import com.vaadin.flow.component.contextmenu.MenuItem;
+import com.vaadin.flow.component.contextmenu.ContextMenu;
 import com.vaadin.flow.component.html.Anchor;
-import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.html.Footer;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.Header;
-import com.vaadin.flow.component.icon.Icon;
-import com.vaadin.flow.component.menubar.MenuBar;
+import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.orderedlayout.Scroller;
 import com.vaadin.flow.router.PageTitle;
-import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.auth.AccessAnnotationChecker;
 import com.vaadin.flow.theme.lumo.LumoUtility;
-import java.io.ByteArrayInputStream;
 import java.util.Optional;
 import rs.atekom.telegram.components.appnav.AppNav;
 import rs.atekom.telegram.components.appnav.AppNavItem;
@@ -31,7 +27,9 @@ import rs.atekom.telegram.views.helloworld.HelloWorldView;
  */
 public class MainLayout extends AppLayout {
 
-    private H2 viewTitle;
+    private static final long serialVersionUID = 1L;
+	private H2 viewTitle;
+    public static final String BOTNAME = "telegram_bot_name";
 
     private AuthenticatedUser authenticatedUser;
     private AccessAnnotationChecker accessChecker;
@@ -84,35 +82,25 @@ public class MainLayout extends AppLayout {
 
     private Footer createFooter() {
         Footer layout = new Footer();
+        layout.addClassNames("app-nav-footer");
 
         Optional<User> maybeUser = authenticatedUser.get();
         if (maybeUser.isPresent()) {
             User user = maybeUser.get();
 
-            Avatar avatar = new Avatar(user.getName());
-            StreamResource resource = new StreamResource("profile-pic",
-                    () -> new ByteArrayInputStream(user.getProfilePicture()));
-            avatar.setImageResource(resource);
-            avatar.setThemeName("xsmall");
-            avatar.getElement().setAttribute("tabindex", "-1");
+            Avatar avatar = new Avatar(user.getUsername(), user.getProfilePictureUrl());
+            avatar.addClassNames("me-xs");
 
-            MenuBar userMenu = new MenuBar();
-            userMenu.setThemeName("tertiary-inline contrast");
-
-            MenuItem userName = userMenu.addItem("");
-            Div div = new Div();
-            div.add(avatar);
-            div.add(user.getName());
-            div.add(new Icon("lumo", "dropdown"));
-            div.getElement().getStyle().set("display", "flex");
-            div.getElement().getStyle().set("align-items", "center");
-            div.getElement().getStyle().set("gap", "var(--lumo-space-s)");
-            userName.add(div);
-            userName.getSubMenu().addItem("Sign out", e -> {
+            ContextMenu userMenu = new ContextMenu(avatar);
+            userMenu.setOpenOnClick(true);
+            userMenu.addItem("Logout", e -> {
                 authenticatedUser.logout();
             });
 
-            layout.add(userMenu);
+            Span name = new Span(user.getName() + " " + user.getLastName());
+            name.addClassNames("font-medium", "text-s", "text-secondary");
+
+            layout.add(avatar, name);
         } else {
             Anchor loginLink = new Anchor("login", "Sign in");
             layout.add(loginLink);
